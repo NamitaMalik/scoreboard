@@ -1,0 +1,72 @@
+<div class="score">
+<div class="score-card">Your Score: {{ (score$ | async)?.score || 0 }}</div>
+  <div>
+    <form [formGroup]="form" (ngSubmit)="submitFrames()" (reset)="resetScore()">
+      <div>
+        <input placeholder="First" type="number" formControlName="first" />
+        <div>
+          <small
+            class="text-danger"
+            *ngIf="
+          form.get('first').touched && form.get('first').hasError('required')
+        "
+          >
+            This field is required.
+          </small>
+          <small
+            class="text-danger"
+            *ngIf="form.get('first')?.touched && form.get('first').hasError('max')"
+          >
+            Max score can be {{ form.get('first').errors.max.max }}.
+          </small>
+        </div>
+      </div>
+      <div>
+        <input type="number" placeholder="Second" formControlName="second" />
+        <div>
+          <small
+            class="text-danger"
+            *ngIf="
+          form.get('second').touched && form.get('second').hasError('required')
+        "
+          >
+            This field is required.
+          </small>
+          <small
+            class="text-danger"
+            *ngIf="form.get('second').touched && form.get('second').hasError('max')"
+          >
+            Max score can be {{ form.get('second').errors.max.max }}.
+          </small>
+        </div>
+
+      </div>
+      <div *ngIf="displayThird">
+        <input placeholder="Third" type="number" formControlName="third" />
+        <small
+          class="text-danger"
+          *ngIf="
+          form.get('third')?.touched && form.get('third').hasError('required')
+        "
+        >
+          This field is required.
+        </small>
+        <small
+          class="text-danger"
+          *ngIf="form.get('third')?.touched && form.get('third').hasError('max')"
+        >
+          Max score can be {{ form.get('third').errors.max.max }}.
+        </small>
+      </div>
+      <div class="actions">
+        <button class="secondary" type="reset" [disabled]="form.pristine">Reset</button>
+        <button
+          type="submit"
+          [disabled]="form.status === 'INVALID' || (disableRoll$ | async)"
+        >
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
