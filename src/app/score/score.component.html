@@ -58,6 +58,15 @@
           Max score can be {{ form.get('third').errors.max.max }}.
         </small>
       </div>
+      <div class="form-error">
+        <small
+          class="text-danger"
+          *ngIf="
+          form.get('first').touched && form.get('second').touched && form.hasError('scoreInput')"
+        >
+          Sum of First and Second roll cannot be greater than 10.
+        </small>
+      </div>
       <div class="actions">
         <button class="secondary" type="reset" [disabled]="form.pristine">Reset</button>
         <button

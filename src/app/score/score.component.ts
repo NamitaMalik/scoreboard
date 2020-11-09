@@ -12,6 +12,7 @@ import {
 } from '@angular/forms';
 import { ScoreService } from './score.service';
 import { Observable, Subscription } from 'rxjs';
+import { scoreInputValidator } from '../validators/score-input.validator';
 
 @Component({
   selector: 'app-score',
@@ -30,7 +31,7 @@ export class ScoreComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.form = this.buildForm();
-    this.score$ =  this._scoreService.getScore();
+    this.score$ = this._scoreService.getScore();
     this.disableRoll$ = this._scoreService.disableRoll();
     this.subscription.add(
       this._scoreService.hasThreeRolls().subscribe((displayThird) => {
@@ -54,7 +55,7 @@ export class ScoreComponent implements OnInit, OnDestroy {
           [Validators.required, Validators.min(0), Validators.max(10)],
         ],
       },
-      { emitEvent: false }
+      { emitEvent: false, validators: scoreInputValidator }
     );
   }
 
