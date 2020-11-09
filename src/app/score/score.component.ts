@@ -13,6 +13,7 @@ import {
 import { ScoreService } from './score.service';
 import { Observable, Subscription } from 'rxjs';
 import { scoreInputValidator } from '../validators/score-input.validator';
+import { Game } from './score.model';
 
 @Component({
   selector: 'app-score',
@@ -41,6 +42,11 @@ export class ScoreComponent implements OnInit, OnDestroy {
         }
       })
     );
+    this.subscription.add(this._scoreService.getGameData().subscribe( (game: Game) => {
+      if (game.frames.length === 9) {
+        this.form.setValidators([]);
+      }
+    }));
   }
 
   buildForm(): FormGroup {
@@ -91,6 +97,7 @@ export class ScoreComponent implements OnInit, OnDestroy {
       this.form.removeControl('third');
     }
     this.displayThird = false;
+    this.form.setValidators(scoreInputValidator);
   }
 
   ngOnDestroy(): void {

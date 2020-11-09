@@ -3,7 +3,7 @@
   <div>
     <form [formGroup]="form" (ngSubmit)="submitFrames()" (reset)="resetScore()">
       <div>
-        <input placeholder="First" type="number" formControlName="first" />
+        <input placeholder="First" type="number" formControlName="first" min="0" />
         <div>
           <small
             class="text-danger"
@@ -22,7 +22,7 @@
         </div>
       </div>
       <div>
-        <input type="number" placeholder="Second" formControlName="second" />
+        <input type="number" placeholder="Second" formControlName="second" min="0" />
         <div>
           <small
             class="text-danger"
@@ -42,7 +42,7 @@
 
       </div>
       <div *ngIf="displayThird">
-        <input placeholder="Third" type="number" formControlName="third" />
+        <input placeholder="Third" type="number" formControlName="third" min="0" />
         <small
           class="text-danger"
           *ngIf="
