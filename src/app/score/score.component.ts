@@ -89,6 +89,7 @@ export class ScoreComponent implements OnInit, OnDestroy {
             second: this.form.get('second').value,
           }
     );
+    this.form.reset();
   }
 
   resetScore(): void {

@@ -21,51 +21,47 @@ export class ScoreService {
       .pipe(map((frames) => ({ frames })));
   }
 
-  calculateScore(game: Observable<Game>): Observable<number>  {
-    return game.pipe(
-      map((frames) => {
+  calculateScore(gameData: Observable<Game>): Observable<{ score: number }>  {
+    return gameData.pipe(
+      map((game) => {
         let isFirstStrikeOrSpare = false;
         let score = 0;
-        let isLastStrike = false;
-        let isLastSpare = false;
-        frames.frames.forEach((frame, index) => {
-          if (frame.first + frame.second > 10 && frames.frames.length !== 10) {
+        const frames = game.frames;
+        frames.forEach((frame, index) => {
+          if (frame.first + frame.second > 10 && frames.length !== 10) {
             throw new Error('Wrong Input');
           }
 
-          if (isLastStrike) {
-            score += frame.first + frame.second;
-          } else if (isLastSpare) {
-            score += frame.first;
-          }
-          isLastStrike = isLastSpare = false;
+          const isStrike = frame.first === 10;
+          const isSpare = frame.first + frame.second === 10;
 
-          if (
-            index === 0 &&
-            (frame.first === 10 || frame.first + frame.second === 10)
-          ) {
-            isFirstStrikeOrSpare = true;
-          }
-          if (index === 9) {
-            score += frame.first + frame.second + frame.third;
+          score += frame.first + frame.second;
+          if (index === 0) {
+            isFirstStrikeOrSpare = isStrike || isSpare;
           } else {
-            score += frame.first + frame.second;
+            const lastFrame = frames[index - 1];
+            if (lastFrame.first === 10) {
+              score += frame.first + frame.second;
+              if (index - 2 >= 0) {
+                const secondLastFrame = frames[index - 2];
+                if (secondLastFrame.first === 10) { score += frame.first; }
+              }
+            } else if (lastFrame.first + lastFrame.second === 10) {
+              score += frame.first;
+            }
           }
 
-          if (frame.first === 10) {
-            isLastStrike = true;
-          }
-          if (frame.first + frame.second === 10) {
-            isLastSpare = true;
+          if (index === 9 && isFirstStrikeOrSpare) {
+            score += frame.third;
           }
         });
-        return score;
+        return { score };
       })
     );
   }
 
   getScore(): Observable<{ score: number }> {
-    return this.calculateScore(this.getGameData()).pipe(map(score => ( { score })));
+    return this.calculateScore(this.getGameData());
   }
 
   disableRoll(): Observable<boolean> {

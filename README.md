@@ -25,9 +25,12 @@ The tenth frame may be composed of up to three rolls: the bonus roll(s) followin
 ## Tech Details
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.1.3.
 
-## Development server
+## How to Run?
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+1. Clone this repository.
+2. Go to the cloned repo.
+3. Install dependencies with `npm install`.
+4. Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`.
 
 ## Build
 
@@ -45,5 +48,6 @@ Run `ng test --code-coverage` to generate code coverage report. Coverage summary
 ## Technical Improvements to be done:
 
 * Using `NgRx` for state management
-* Building common components for input fields and button
+* Building common components for input fields and buttons
+* Adding more specs
  

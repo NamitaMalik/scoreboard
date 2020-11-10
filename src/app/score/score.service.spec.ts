@@ -34,29 +34,29 @@ describe('ScoreService', () => {
           { first: 3, second: 4 },
           { first: 4, second: 5 }
         ]
-      })).subscribe(score => expect(score).toBe(16));
+      })).subscribe(score => expect(score.score).toBe(16));
       service.calculateScore(of({
         frames: [
           { first: 3, second: 4 },
           { first: 6, second: 4 },
           { first: 6, second: 2 }
         ]
-      })).subscribe(score => expect(score).toBe(31));
+      })).subscribe(score => expect(score.score).toBe(31));
       service.calculateScore(of({
         frames: [
           { first: 3, second: 4 },
           { first: 10, second: 0 },
           { first: 6, second: 2 }
         ]
-      })).subscribe(score => expect(score).toBe(33));
+      })).subscribe(score => expect(score.score).toBe(33));
       service.calculateScore(of({
         frames: [
-          { first: 3, second: 4 },
-          { first: 10, second: 0 },
-          { first: 10, second: 0 },
-          { first: 6, second: 2 }
+          {first: 3, second: 4},
+          {first: 10, second: 0},
+          {first: 10, second: 0},
+          {first: 6, second: 2},
         ]
-      })).subscribe(score => expect(score).toBe(53));
+      })).subscribe(score => expect(score.score).toBe(59));
       service.calculateScore(of({
         frames: [
           { first: 3, second: 7 },
@@ -70,7 +70,7 @@ describe('ScoreService', () => {
           { first: 1, second: 0 },
           { first: 1, second: 2, third: 3 }
         ]
-      })).subscribe(score => expect(score).toBe(73));
+      })).subscribe(score => expect(score.score).toBe(73));
     });
     it('throws error when sum of 2 rolls is greater than 10', () => {
       service.calculateScore(of({

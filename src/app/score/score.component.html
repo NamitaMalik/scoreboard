@@ -68,7 +68,7 @@
         </small>
       </div>
       <div class="actions">
-        <button class="secondary" type="reset" [disabled]="form.pristine">Reset</button>
+        <button class="secondary" type="reset">Reset</button>
         <button
           type="submit"
           [disabled]="form.status === 'INVALID' || (disableRoll$ | async)"
